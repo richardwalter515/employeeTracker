@@ -38,22 +38,22 @@ const runSearch = () => {
           addDept();
           break;
         case 'Add a role':
-          multiSearch();
+          addRole();
           break;
         case 'Add an employee':
-          rangeSearch();
+          addEmployee();
           break;
         case 'View employees by department':
-          songSearch();
+          viewEmployeesDept();
           break;
         case 'View employees by roles':
-          songSearch();
+          viewEmployeesRole();
           break;
         case 'View all employees':
-          songSearch();
+          viewAllEmployees();
           break;
         case 'Update an employee role':
-          songSearch();
+          updateEmployee();
           break;
         case 'exit':
           connection.end();
@@ -70,11 +70,39 @@ const addDept = () => {
       message: 'What department would you like to add?',
     })
     .then((answer) => {
-      const query = connection.query(
+      connection.query(
         "INSERT INTO department SET ?", {name: answer.deptName,},
         function(err, res) {
           if (err) throw err;
           console.log(`successfully added ${answer.deptName} to database`);
+          runSearch();
+        });
+    });
+};
+
+const addRole = () => {
+  inquirer
+    .prompt([{
+      name: 'title',
+      type: 'input',
+      message: 'What role would you like to add?'
+    },
+    {
+      name: 'salary',
+      type: 'input',
+      message: 'What is the salary for this role?'
+    },
+    {
+      name: 'department_id',
+      type: 'input',
+      message: 'What is the department ID for this role?'
+    }])
+    .then((answer) => {
+      const query = "INSERT INTO role SET?"
+      connection.query(
+        query, {title: answer.title, salary: answer.salary, department_id: answer.department_id}, function(err, res) {
+          if (err) throw err;
+          console.log(`successfully added ${answer.title} to database`);
           runSearch();
         });
     });

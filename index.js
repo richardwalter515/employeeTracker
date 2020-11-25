@@ -105,5 +105,38 @@ const addRole = () => {
           console.log(`successfully added ${answer.title} to database`);
           runSearch();
         });
-    });
+    });  
+};
+
+const addEmployee = () => {
+  inquirer
+    .prompt([{
+      name: 'first_name',
+      type: 'input',
+      message: 'What is the first name?'
+    },
+    {
+      name: 'last_name',
+      type: 'input',
+      message: 'What is the last name?'
+    },
+    {
+      name: 'role_id',
+      type: 'input',
+      message: 'What is the role ID for this employee?'
+    },
+    {
+      name: 'manager_id',
+      type: 'input',
+      message: 'What is the manager ID for this employee?'
+    }])
+    .then((answer) => {
+      const query = "INSERT INTO employee SET?"
+      connection.query(
+        query, {first_name: answer.first_name, last_name: answer.last_name, role_id: answer.role_id, manager_id: answer.manager_id}, function(err, res) {
+          if (err) throw err;
+          console.log(`successfully added ${answer.first_name} to database`);
+          runSearch();
+        });
+    });  
 };

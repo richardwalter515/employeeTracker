@@ -146,7 +146,7 @@ const viewDepts = () => {
   'SELECT * FROM department';
   connection.query(query, (err, res) => {
   if (err) throw err;
-  res.map((r) => console.table(r));
+  console.table(res);
   runSearch();
   });
 };
@@ -156,17 +156,16 @@ const viewRoles = () => {
   'SELECT * FROM role';
   connection.query(query, (err, res) => {
   if (err) throw err;
-  res.map((r) => console.table(r));
+  console.table(res);
   runSearch();
   });
 };
 
 const viewAllEmployees = () => {
-  const query =
-  "SELECT employee.first_name, employee.last_name, employee.role_id, employee.manager_id FROM employee INNER JOIN role ON employee.role_id=role.id";
+  const query = "SELECT e.id, e.first_name, e.last_name, e.manager_id, r.title, r.salary, d.name FROM employee AS e INNER JOIN role AS r ON e.role_id = r.id INNER JOIN department AS d ON r.department_id = d.id";
   connection.query(query, (err, res) => {
   if (err) throw err;
-  res.map((r) => console.table(r));
+  console.table(res);
   runSearch();
   });
 };

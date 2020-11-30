@@ -123,7 +123,7 @@ const addEmployee = () => {
     {
       name: 'role_id',
       type: 'input',
-      message: 'What is the role ID for this employee?'
+      message: 'What is the ID for their role?'
     },
     {
       name: 'manager_id',
@@ -173,32 +173,67 @@ const viewAllEmployees = () => {
 const updateEmployee = () => {
   inquirer
     .prompt([{
-      name: 'first_name',
+      name: 'emp_id',
       type: 'input',
-      message: 'What is the first name?'
+      message: 'What is the employee ID of the person whose role would you like to update?'
     },
     {
-      name: 'last_name',
-      type: 'input',
-      message: 'What is the last name?'
-    },
-    {
-      name: 'role_id',
-      type: 'input',
-      message: 'What is the role ID for this employee?'
-    },
-    {
-      name: 'manager_id',
-      type: 'input',
-      message: 'What is the manager ID for this employee?'
+      name: 'new_role',
+      type: 'list',
+      message: 'What is their new role?',
+      choices: [
+        'Junior Developer',
+        'Developer',
+        'Senior Developer',
+        'CEO',
+        'Vice President',
+        'Intern'
+      ]
     }])
     .then((answer) => {
-      const query = "INSERT INTO employee SET?"
-      connection.query(
-        query, {first_name: answer.first_name, last_name: answer.last_name, role_id: answer.role_id, manager_id: answer.manager_id}, function(err, res) {
+      if (answer.new_role === "Junior Developer") {
+        const query = `UPDATE employee SET role_id = 1 WHERE id = ${answer.emp_id}`;
+        connection.query(query, function(err, res) {
           if (err) throw err;
-          console.log(`successfully added ${answer.first_name} to database`);
+          console.log(`successfully updated the role for employee # ${answer.emp_id}`);
           runSearch();
         });
+      } else if (answer.new_role === "Developer") {
+        const query = `UPDATE employee SET role_id = 2 WHERE id = ${answer.emp_id}`;
+        connection.query(query, function(err, res) {
+          if (err) throw err;
+          console.log(`successfully updated the role for employee # ${answer.emp_id}`);
+          runSearch();
+        });
+      } else if (answer.new_role === "Senior Developer") {
+        const query = `UPDATE employee SET role_id = 3 WHERE id = ${answer.emp_id}`;
+        connection.query(query, function(err, res) {
+          if (err) throw err;
+          console.log(`successfully updated the role for employee # ${answer.emp_id}`);
+          runSearch();
+        });
+      } else if (answer.new_role === "CEO") {
+        const query = `UPDATE employee SET role_id = 4 WHERE id = ${answer.emp_id}`;
+        connection.query(query, function(err, res) {
+          if (err) throw err;
+          console.log(`successfully updated the role for employee # ${answer.emp_id}`);
+          runSearch();
+        });
+      } else if (answer.new_role === "Vice President") {
+        const query = `UPDATE employee SET role_id = 5 WHERE id = ${answer.emp_id}`;
+        connection.query(query, function(err, res) {
+          if (err) throw err;
+          console.log(`successfully updated the role for employee # ${answer.emp_id}`);
+          runSearch();
+        });
+      } else if (answer.new_role === "Intern") {
+        const query = `UPDATE employee SET role_id = 6 WHERE id = ${answer.emp_id}`;
+        connection.query(query, function(err, res) {
+          if (err) throw err;
+          console.log(`successfully updated the role for employee # ${answer.emp_id}`);
+          runSearch();
+        });
+      }
+
     });  
 };

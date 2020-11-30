@@ -30,6 +30,7 @@ const runSearch = () => {
         'View all roles',
         'View all employees',
         'Update an employee role',
+        'Delete an employee',
         'exit',
       ],
     }).then((answer) => {
@@ -54,6 +55,9 @@ const runSearch = () => {
           break;
         case 'Update an employee role':
           updateEmployee();
+          break;
+        case 'Delete an employee':
+          deleteEmployee();
           break;
         case 'exit':
           connection.end();
@@ -236,4 +240,21 @@ const updateEmployee = () => {
       }
 
     });  
+};
+
+const deleteEmployee = () => {
+  inquirer
+    .prompt([{
+      name: 'emp_id',
+      type: 'input',
+      message: 'What is the employee ID of the employee you would like to delete?'
+    }])
+    .then((answer) => {
+      const query = `DELETE FROM employee WHERE id = ${answer.emp_id}`;
+      connection.query(query, function(err, res) {
+        if (err) throw err;
+        console.log(`successfully deleted employee # ${answer.emp_id}`);
+        runSearch();
+    })
+  });  
 };
